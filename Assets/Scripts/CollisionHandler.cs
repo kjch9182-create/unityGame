@@ -5,28 +5,30 @@ public class CollisionHandler : MonoBehaviour
 {
     void OnCollisionEnter(Collision Collision)
     {
-         switch (Collision.gameObject.tag)
-         {
-             case "Start":
-              Debug.Log("시작합니다");
-              break;
+        switch (Collision.gameObject.tag)
+        {
+            case "Start":
+                Debug.Log("시작합니다");
+                break;
 
-             case "Finish":
-              Debug.Log("도착");
-              break;
+            case "Finish":
+                LoadNextLevel();
+                break;
+            default:
+                ReloadLevel();
+                break;
+        }
+    }
 
-             case "Fuel":
-              Debug.Log("연료를 얻었다!");
-              break;
-
-             default:
-              ReloadLevel();
-              break;
-         }
+    void LoadNextLevel()
+    {
+        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        SceneManager.LoadScene(currentSceneIndex + 1);
     }
 
     void ReloadLevel()
     {
-        SceneManager.LoadScene(0);
+        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        SceneManager.LoadScene(currentSceneIndex);
     }
 }
